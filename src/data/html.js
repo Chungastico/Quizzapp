@@ -10,8 +10,23 @@ export const htmlQuestions = [
         answer: 0
     },
     {
-        question: "¿Qué etiqueta se usa para crear un enlace?",
+        question: "¿Cuál es la etiqueta para insertar una imagen?",
+        options: ["<pic>", "<image>", "<img>", "<src>"],
+        answer: 2
+    },
+    {
+        question: "¿Cuál etiqueta se usa para enlaces?",
         options: ["<link>", "<a>", "<href>", "<url>"],
+        answer: 1
+    },
+    {
+        question: "¿Qué atributo especifica el texto alternativo de una imagen?",
+        options: ["title", "alt", "src", "desc"],
+        answer: 1
+    },
+    {
+        question: "¿Qué etiqueta se usa para listas no ordenadas?",
+        options: ["<ol>", "<ul>", "<li>", "<list>"],
         answer: 1
     }
 ];
