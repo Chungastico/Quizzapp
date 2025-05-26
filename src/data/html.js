@@ -11,12 +11,12 @@ export const htmlQuestions = [
     },
     {
         question: "¿Cuál es la etiqueta para insertar una imagen?",
-        options: ["<pic>", "<image>", "<img>", "<src>"],
+        options: ["pic", "image", "img", "src"],
         answer: 2
     },
     {
         question: "¿Cuál etiqueta se usa para enlaces?",
-        options: ["<link>", "<a>", "<href>", "<url>"],
+        options: ["link", "a", "href", "url"],
         answer: 1
     },
     {
@@ -26,7 +26,7 @@ export const htmlQuestions = [
     },
     {
         question: "¿Qué etiqueta se usa para listas no ordenadas?",
-        options: ["<ol>", "<ul>", "<li>", "<list>"],
+        options: ["ol", "ul", "li", "list"],
         answer: 1
     }
 ];

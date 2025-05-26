@@ -21,7 +21,7 @@ export const jsQuestions = [
     },
     {
         question: "¿Qué símbolo se usa para comentarios de una línea?",
-        options: ["<!--", "//", "/*", "#"],
+        options: ["!--", "//", "/*", "#"],
         answer: 1
     }
 ];

@@ -6,7 +6,7 @@ export const pythonQuestions = [
     },
     {
         question: "¿Qué símbolo se usa para comentarios?",
-        options: ["//", "#", "<!--", "/* */"],
+        options: ["//", "#", "!--", "/* */"],
         answer: 1
     },
     {

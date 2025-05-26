@@ -1,9 +1,7 @@
-import { renderQuestion } from './questionsView.js';
-
 let currentIndex = 0;
 let score = 0;
 let timerInterval;
-let timeLeft = 20;
+let timeLeft = 20; // ← tiempo para responder
 let selected = false;
 
 export function startQuiz(questions) {
@@ -18,12 +16,12 @@ function renderCurrentQuestion(questions) {
   selected = false;
 
   const optionBtns = document.querySelectorAll('.option-btn');
-  const nextBtn = document.getElementById('nextBtn');
 
   startTimer(() => {
     if (!selected) {
-      disableOptions(optionBtns);
-      showNextBtn(nextBtn, questions);
+      disableOptions(optionBtns, currentQuestion.answer);
+      // esperar 2 segundos después de que se acabe el tiempo
+      goToNext(questions);
     }
   });
 
@@ -43,56 +41,50 @@ function renderCurrentQuestion(questions) {
         optionBtns[correctIndex].classList.add('bg-green-600');
       }
 
-      disableOptions(optionBtns);
-      showNextBtn(nextBtn, questions);
+      disableOptions(optionBtns, correctIndex);
+      goToNext(questions); // ← espera 2s antes de cambiar
     });
-  });
-
-  nextBtn.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    currentIndex++;
-    if (currentIndex < questions.length) {
-      resetTimer();
-      renderCurrentQuestion(questions);
-    } else {
-      showResults(score, questions.length);
-    }
   });
 }
 
 function disableOptions(buttons) {
-  buttons.forEach(btn => {
+  buttons.forEach((btn) => {
     btn.disabled = true;
-    btn.classList.remove('hover:bg-gray-600'); // ❌ desactiva hover visual
+    btn.classList.remove('hover:bg-gray-600');
     btn.classList.add('cursor-default', 'opacity-70');
   });
 }
 
-function showNextBtn(btn, questions) {
-  btn.classList.remove('hidden');
+function goToNext(questions) {
+  clearInterval(timerInterval);
   setTimeout(() => {
-    btn.click();
-  }, 3000); // ⏱ auto siguiente en 3s
+    currentIndex++;
+    if (currentIndex < questions.length) {
+      timeLeft = 20;
+      renderCurrentQuestion(questions);
+    } else {
+      showResults(score, questions.length);
+    }
+  }, 2000); // ← espera 2s antes de cambiar
 }
 
-function startTimer(onExpire) {
-  const timerEl = document.getElementById('timer');
+function startTimer(onTimeout) {
+  clearInterval(timerInterval);
   timeLeft = 20;
-  timerEl.textContent = timeLeft;
-
+  updateTimerDisplay();
   timerInterval = setInterval(() => {
     timeLeft--;
-    timerEl.textContent = timeLeft;
+    updateTimerDisplay();
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      onExpire();
+      onTimeout();
     }
   }, 1000);
 }
 
-function resetTimer() {
-  clearInterval(timerInterval);
-  timeLeft = 20;
+function updateTimerDisplay() {
+  const timerEl = document.getElementById('timer');
+  if (timerEl) timerEl.textContent = timeLeft;
 }
 
 function showResults(score, total) {
@@ -104,6 +96,29 @@ function showResults(score, total) {
         <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded">
           Volver al inicio
         </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderQuestion(questionObj, currentIndex, total, timer) {
+  return `
+    <div class="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
+      <div class="bg-gray-800 p-6 rounded-xl w-full max-w-xl space-y-6">
+        <div class="flex justify-between items-center text-sm text-gray-400">
+          <span>Pregunta ${currentIndex + 1} de ${total}</span>
+          <span>Tiempo restante: <span id="timer">${timer}</span>s</span>
+        </div>
+
+        <h2 class="text-xl font-semibold break-words">${questionObj.question}</h2>
+
+        <div id="options" class="flex flex-col gap-3">
+          ${questionObj.options.map((opt, i) => `
+            <button class="option-btn bg-gray-700 transition rounded p-3 text-left" data-index="${i}">
+              ${opt}
+            </button>
+          `).join('')}
+        </div>
       </div>
     </div>
   `;
