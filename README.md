@@ -38,13 +38,5 @@ La lógica central del quiz está en el archivo `main.js`, y sigue la siguiente 
 - Tailwind CSS
 - JavaScript
 
-## 📁 Estructura del proyecto
 
-Quizzapp/
-│
-├── index.html # Página principal
-├── style.css # Estilos con Tailwind
-├── main.js # Lógica del juego
-├── questions.js # Preguntas de cada categoría
-└── assets/ # Imágenes y recursos
 
